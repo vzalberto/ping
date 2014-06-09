@@ -48,10 +48,11 @@ void *sendICMP()
 	icmp->code = 0;
 	icmp->checksum = 0;
 	icmp->un.echo.id = getpid();
-	icmp->un.echo.sequence = 0;
-	
-	//Envio
+	int i=0;
+	while(1)
+	{		
 
+	icmp->un.echo.sequence = i;
 	if((s = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP)) < 0)
 	{
 		perror("ERROR AL OBTENER SOCKET");
@@ -62,6 +63,15 @@ void *sendICMP()
 		perror("Error al enviar paquete");
 		exit(1);
 	}
+	i++;
+
+	close(s);
+	sleep(1);
+
+	}
+	
+	//Envio
+
 
 }
 
